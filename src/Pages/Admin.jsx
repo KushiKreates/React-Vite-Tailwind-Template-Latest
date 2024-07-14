@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import Header from './Header';
 import anime from 'animejs/lib/anime.es.js'; // Import anime.js
+import axios from 'axios';
 
 const bytesToGB = (bytes) => {
   if (bytes === 0) return '0 GB';
@@ -9,8 +9,16 @@ const bytesToGB = (bytes) => {
   return gigaBytes.toFixed(2) + ' GB';
 };
 
+const secondsToHours = (seconds) => {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  return `${hours}h ${minutes}m`;
+};
+
 const Admin = () => {
   const [lxcContainers, setLxcContainers] = useState([]);
+  const [message, setMessage] = useState('');
+
   const apiUrl = 'http://de-prem-01.hosts.optikservers.com:35300/lxc';
 
   useEffect(() => {
@@ -36,12 +44,34 @@ const Admin = () => {
     fetchLxcContainers();
   }, []);
 
+  const handlePowerOn = async (vmid) => {
+    try {
+      const response = await axios.post(`${apiUrl}/start/${vmid}`);
+      console.log(`Successfully powered on container with VMID ${vmid}`);
+      setMessage(`Container '${response.data.name}' has been powered on.`);
+      fetchLxcContainers(); // Refresh containers list after action
+    } catch (error) {
+      console.error(`Error powering on container with VMID ${vmid}:`, error);
+    }
+  };
+
+  const handlePowerOff = async (vmid) => {
+    try {
+      const response = await axios.post(`${apiUrl}/stop/${vmid}`);
+      console.log(`Successfully powered off container with VMID ${vmid}`);
+      setMessage(`Container '${response.data.name}' has been powered off.`);
+      fetchLxcContainers(); // Refresh containers list after action
+    } catch (error) {
+      console.error(`Error powering off container with VMID ${vmid}:`, error);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-900 text-white">
       <Header />
       <div className="container mx-auto p-4">
-        <div className="bg-white shadow-md rounded-md p-4">
-          <h2 className="text-lg font-semibold mb-2">LXC Containers</h2>
+        <div className="bg-gray-800 rounded-md p-4">
+          <h2 className="text-lg font-semibold mb-4">LXC Containers</h2>
           {lxcContainers.length === 0 ? (
             <p>No containers found.</p>
           ) : (
@@ -49,22 +79,41 @@ const Admin = () => {
               {lxcContainers.map((container) => (
                 <div
                   key={container.vmid}
-                  className="container-card bg-gray-50 p-4 rounded-lg shadow-md"
+                  className="container-card bg-gray-700 p-4 rounded-lg shadow-md relative"
                 >
                   <div className="mb-4">
                     <p className="text-lg font-semibold">{container.name || 'No Name'}</p>
-                    <p className="text-gray-500">{container.status}</p>
+                    <p className="text-gray-300">{container.status}</p>
                   </div>
                   <div className="mb-2">
                     <p><span className="font-semibold">CPU:</span> {container.cpu}</p>
                     <p><span className="font-semibold">Memory:</span> {bytesToGB(container.mem)}</p>
                     <p><span className="font-semibold">Disk:</span> {bytesToGB(container.disk)}</p>
-                    <p><span className="font-semibold">Net In:</span> {container.netin} bytes</p>
-                    <p><span className="font-semibold">Net Out:</span> {container.netout} bytes</p>
-                    <p><span className="font-semibold">Uptime:</span> {container.uptime} seconds</p>
+                    <p><span className="font-semibold">Network In:</span> {bytesToGB(container.netin)}</p>
+                    <p><span className="font-semibold">Network Out:</span> {bytesToGB(container.netout)}</p>
+                    <p><span className="font-semibold">Uptime:</span> {secondsToHours(container.uptime)}</p>
+                  </div>
+                  <div className="absolute bottom-4 right-4 flex flex-col gap-2">
+                    <button
+                      onClick={() => handlePowerOn(container.vmid)}
+                      className="bg-green-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
+                    >
+                      Power On
+                    </button>
+                    <button
+                      onClick={() => handlePowerOff(container.vmid)}
+                      className="bg-red-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500"
+                    >
+                      Power Off
+                    </button>
                   </div>
                 </div>
               ))}
+            </div>
+          )}
+          {message && (
+            <div className="mt-4 p-2 bg-gray-600 rounded-md">
+              <p className="text-green-300">{message}</p>
             </div>
           )}
         </div>
