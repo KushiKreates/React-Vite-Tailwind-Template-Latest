@@ -1,43 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
-const Admin = () => {
-  const [lxcContainers, setLxcContainers] = useState([]);
-  const apiUrl = 'http://de-prem-01.hosts.optikservers.com:35300/lxc';
-
-  useEffect(() => {
-    const fetchLxcContainers = async () => {
-      try {
-        const response = await fetch(apiUrl);
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
-        setLxcContainers(data.data); // Assuming data structure is { data: [...] }
-      } catch (error) {
-        console.error('Error fetching LXC containers:', error);
-      }
-    };
-
-    fetchLxcContainers();
-  }, []); // Empty dependency array ensures useEffect runs only once
-
+const LxcContainerComponent = ({ container }) => {
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">Admin Panel</h1>
-      <div className="max-w-3xl mx-auto bg-white shadow-md rounded-md p-4">
-        <h2 className="text-lg font-semibold mb-2">LXC Containers</h2>
-        <div>
-          {lxcContainers.map((container) => (
-            <div key={container.vmid} className="border-b border-gray-200 mb-2 pb-2">
-              <p className="text-gray-700">ID: {container.vmid}</p>
-              <p className="text-gray-700">Status: {container.status}</p>
-              {/* Add more fields as needed */}
-            </div>
-          ))}
-        </div>
-      </div>
+    <div className="bg-gray-50 p-4 rounded-lg shadow">
+      <p className="text-lg font-semibold text-gray-900">Name: {container.name}</p>
+      <p className="text-gray-700">ID: {container.vmid}</p>
+      <p className="text-gray-700">Status: {container.status}</p>
+      <p className="text-gray-700">CPU Usage: {container.cpu.toFixed(4)}</p>
+      <p className="text-gray-700">Memory Usage: {container.mem} bytes</p>
+      <p className="text-gray-700">Disk Usage: {container.disk} bytes</p>
+      <p className="text-gray-700">Network In: {container.netin} bytes</p>
+      <p className="text-gray-700">Network Out: {container.netout} bytes</p>
+      {/* Add more fields as needed */}
     </div>
   );
 };
 
-export default Admin;
+export default LxcContainerComponent;

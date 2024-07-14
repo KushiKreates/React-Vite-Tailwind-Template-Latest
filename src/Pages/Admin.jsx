@@ -1,53 +1,73 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Header from './Header';
+import anime from 'animejs/lib/anime.es.js'; // Import anime.js
+
+const bytesToGB = (bytes) => {
+  if (bytes === 0) return '0 GB';
+  const gigaBytes = bytes / (1024 * 1024 * 1024);
+  return gigaBytes.toFixed(2) + ' GB';
+};
 
 const Admin = () => {
   const [lxcContainers, setLxcContainers] = useState([]);
-  const apiUrl = 'https://81.169.237.72:8006/api2/json/nodes/h3066910/lxc';
-  const headers = {
-    Authorization: 'PVEAPIToken=API@pve!dash-app=0e39b17b-1e8e-490c-9251-bc24407c0f5c',
-  };
+  const apiUrl = 'http://de-prem-01.hosts.optikservers.com:35300/lxc';
 
   useEffect(() => {
     const fetchLxcContainers = async () => {
-        try {
-          const response = await axios.get(apiUrl, { headers });
-          setLxcContainers(response.data.data);
-        } catch (error) {
-          console.error('Error fetching LXC containers:', error);
-          // Handle specific error cases here, such as network errors or server issues
-        }
-      };
-      
+      try {
+        const response = await axios.get(apiUrl);
+        setLxcContainers(response.data.data);
+
+        // Animate container cards on load
+        anime({
+          targets: '.container-card',
+          translateY: [50, 0],
+          opacity: [0, 1],
+          easing: 'easeOutQuad',
+          duration: 800,
+          delay: anime.stagger(100),
+        });
+      } catch (error) {
+        console.error('Error fetching LXC containers:', error);
+      }
+    };
 
     fetchLxcContainers();
-  }, []); // Empty dependency array ensures useEffect runs only once
+  }, []);
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">Admin Panel</h1>
-      
-      <div className="max-w-3xl mx-auto bg-white shadow-md rounded-md p-4">
-        <h2 className="text-lg font-semibold mb-2">LXC Containers</h2>
-        
-        {lxcContainers.length === 0 ? (
-          <p>No containers found.</p>
-        ) : (
-          <div className="divide-y divide-gray-200">
-            {lxcContainers.map((container) => (
-              <div key={container.vmid} className="py-4">
-                <p className="text-lg font-semibold">{container.name}</p>
-                <p>Status: {container.status}</p>
-                <p>CPU: {container.cpu}</p>
-                <p>Memory Usage: {container.mem} bytes</p>
-                <p>Disk Usage: {container.disk} bytes</p>
-                <p>Network In: {container.netin} bytes</p>
-                <p>Network Out: {container.netout} bytes</p>
-                <p>Uptime: {container.uptime} seconds</p>
-              </div>
-            ))}
-          </div>
-        )}
+    <div className="min-h-screen bg-gray-100">
+      <Header />
+      <div className="container mx-auto p-4">
+        <div className="bg-white shadow-md rounded-md p-4">
+          <h2 className="text-lg font-semibold mb-2">LXC Containers</h2>
+          {lxcContainers.length === 0 ? (
+            <p>No containers found.</p>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {lxcContainers.map((container) => (
+                <div
+                  key={container.vmid}
+                  className="container-card bg-gray-50 p-4 rounded-lg shadow-md"
+                >
+                  <div className="mb-4">
+                    <p className="text-lg font-semibold">{container.name || 'No Name'}</p>
+                    <p className="text-gray-500">{container.status}</p>
+                  </div>
+                  <div className="mb-2">
+                    <p><span className="font-semibold">CPU:</span> {container.cpu}</p>
+                    <p><span className="font-semibold">Memory:</span> {bytesToGB(container.mem)}</p>
+                    <p><span className="font-semibold">Disk:</span> {bytesToGB(container.disk)}</p>
+                    <p><span className="font-semibold">Net In:</span> {container.netin} bytes</p>
+                    <p><span className="font-semibold">Net Out:</span> {container.netout} bytes</p>
+                    <p><span className="font-semibold">Uptime:</span> {container.uptime} seconds</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
