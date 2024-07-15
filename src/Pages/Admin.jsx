@@ -11,6 +11,12 @@ const bytesToGB = (bytes) => {
   return gigaBytes.toFixed(2) + ' GB';
 };
 
+const cpuUsage = (cpuValue) => {
+  if (cpuValue === 1) return '100% (Maximum)';
+  const percentage = cpuValue * 100;
+  return percentage.toFixed(2) + '%';
+};
+
 const secondsToHours = (seconds) => {
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);
@@ -90,7 +96,7 @@ const Admin = () => {
                       <p className="text-gray-400">{container.status}</p>
                     </div>
                     <div className="mb-1">
-                      <p><span className="font-semibold">CPU:</span> {container.cpu}</p>
+                      <p><span className="font-semibold">CPU:</span> {cpuUsage(container.cpu)}</p>
                       <p><span className="font-semibold">Memory:</span> {bytesToGB(container.mem)}</p>
                       <p><span className="font-semibold">Disk:</span> {bytesToGB(container.disk)}</p>
                       <p><span className="font-semibold">Net In:</span> {bytesToGB(container.netin)}</p>
