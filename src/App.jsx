@@ -8,6 +8,7 @@ import Settings from './Pages/Settings';
 import Activity from './Pages/Activity';
 import Servers from './Pages/Servers';
 import User from './Pages/User';
+import Payment from './Pages/Payment';
 import Header from './Pages/Header';
 import SideBar from './Pages/SideBar';
 
@@ -24,6 +25,7 @@ const App = () => {
               <Route path="/activity" element={<Activity />} />
               <Route path="/servers" element={<Servers />} />
               <Route path="/user" element={<User />} />
+              <Route path="/payment" element={<Payment />} />
             </Routes>
     </Router>
   );
