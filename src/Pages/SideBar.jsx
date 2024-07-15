@@ -14,6 +14,8 @@ import {
   StoreIcon,
   SettingsIcon
 } from '../Comps/ui/Icons'; // Assuming Icons are exported from Icons.jsx
+import { PiUserCircleMinusDuotone } from 'react-icons/pi';
+import { SiIcon } from 'react-icons/si';
 
 const SideBar = () => {
   useEffect(() => {
@@ -58,6 +60,13 @@ const SideBar = () => {
           <SettingsIcon className="w-5 h-5" />
           <span>Settings</span>
         </a>
+
+        <a href="/Settings" className="flex items-center px-4 py-2 space-x-2 rounded-md hover:bg-gray-700 hover:animate-fadeIn">
+          <SiIcon className="w-5 h-5" />
+          <span>Admin</span>
+        </a>
+        
+        
       </nav>
       <div className="flex items-center justify-center h-16 mt-8">
         <Resizable

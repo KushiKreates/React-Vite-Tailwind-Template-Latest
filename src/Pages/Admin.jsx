@@ -93,8 +93,8 @@ const Admin = () => {
                       <p><span className="font-semibold">CPU:</span> {container.cpu}</p>
                       <p><span className="font-semibold">Memory:</span> {bytesToGB(container.mem)}</p>
                       <p><span className="font-semibold">Disk:</span> {bytesToGB(container.disk)}</p>
-                      <p><span className="font-semibold">Network In:</span> {bytesToGB(container.netin)}</p>
-                      <p><span className="font-semibold">Network Out:</span> {bytesToGB(container.netout)}</p>
+                      <p><span className="font-semibold">Net In:</span> {bytesToGB(container.netin)}</p>
+                      <p><span className="font-semibold">Net Out:</span> {bytesToGB(container.netout)}</p>
                       <p><span className="font-semibold">Uptime:</span> {secondsToHours(container.uptime)}</p>
                     </div>
                     <div className="absolute bottom-4 right-4 flex flex-col gap-2">
