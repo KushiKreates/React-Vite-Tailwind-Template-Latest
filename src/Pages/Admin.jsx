@@ -2,20 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from './Header';
 import anime from 'animejs/lib/anime.es.js'; // Import anime.js
 import axios from 'axios';
-import { Resizable } from 're-resizable';
-import {
-  Avatar,
-  AvatarImage,
-  AvatarFallback
-} from '../Comps/ui/avatar';
-import {
-  HomeIcon,
-  ServerIcon,
-  ActivityIcon,
-  ReceiptIcon,
-  StoreIcon,
-  SettingsIcon
-} from '../Comps/ui/Icons'; // Assuming Icons are exported from Icons.jsx
+import SideBar from './SideBar';
 
 const bytesToGB = (bytes) => {
   if (bytes === 0) return '0 GB';
@@ -82,53 +69,10 @@ const Admin = () => {
 
   return (
     <div className="flex h-screen bg-gray-800 text-white">
-      <aside className="flex flex-col w-64 p-4 bg-gray-900">
-        <div className="flex items-center justify-center h-16 mb-8">
-          <img src="/logo.svg" alt="Neko-Astral Logo" className="w-12 h-12" />
-        </div>
-        <nav className="flex-1 space-y-4">
-          <a href="#" className="flex items-center px-4 py-2 space-x-2 rounded-md hover:bg-gray-700 hover:animate-fadeIn">
-            <HomeIcon className="w-5 h-5" />
-            <span>Home</span>
-          </a>
-          <a href="#" className="flex items-center px-4 py-2 space-x-2 rounded-md hover:bg-gray-700 hover:animate-fadeIn">
-            <ServerIcon className="w-5 h-5" />
-            <span>Servers</span>
-          </a>
-          <a href="#" className="flex items-center px-4 py-2 space-x-2 rounded-md hover:bg-gray-700 hover:animate-fadeIn">
-            <ActivityIcon className="w-5 h-5" />
-            <span>Activity</span>
-          </a>
-          <a href="#" className="flex items-center px-4 py-2 space-x-2 rounded-md hover:bg-gray-700 hover:animate-fadeIn">
-            <ReceiptIcon className="w-5 h-5" />
-            <span>Payment</span>
-          </a>
-          <a href="#" className="flex items-center px-4 py-2 space-x-2 rounded-md hover:bg-gray-700 hover:animate-fadeIn">
-            <StoreIcon className="w-5 h-5" />
-            <span>Shop</span>
-          </a>
-          <a href="#" className="flex items-center px-4 py-2 space-x-2 rounded-md hover:bg-gray-700 hover:animate-fadeIn">
-            <SettingsIcon className="w-5 h-5" />
-            <span>Settings</span>
-          </a>
-        </nav>
-        <div className="flex items-center justify-center h-16 mt-8">
-          <Resizable
-            defaultSize={{
-              width: 26,
-              height: 26,
-            }}
-          >
-            <Avatar>
-              <AvatarImage src="/user.svg" className="avatar" />
-              <AvatarFallback>U</AvatarFallback>
-            </Avatar>
-          </Resizable>
-          <span className="ml-2">Username</span>
-        </div>
-      </aside>
+      <SideBar />
       <main className="flex-1 p-8 bg-gray-800 rounded-tl-lg overflow-y-auto">
         <div className="container mx-auto p-4">
+          <Header />
           <div className="bg-gray-900 shadow-md rounded-md p-4">
             <h2 className="text-lg font-semibold mb-2">LXC Containers</h2>
             {lxcContainers.length === 0 ? (
