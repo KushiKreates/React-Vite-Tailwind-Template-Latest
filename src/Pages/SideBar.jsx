@@ -34,27 +34,27 @@ const SideBar = () => {
         <img src="/logo.svg" alt="Neko-Astral Logo" className="w-12 h-12" />
       </div>
       <nav className="flex-1 space-y-4 sidebar-animation">
-        <a href="#" className="flex items-center px-4 py-2 space-x-2 rounded-md hover:bg-gray-700 hover:animate-fadeIn">
+        <a href="/" className="flex items-center px-4 py-2 space-x-2 rounded-md hover:bg-gray-700 hover:animate-fadeIn">
           <HomeIcon className="w-5 h-5" />
           <span>Home</span>
         </a>
-        <a href="#" className="flex items-center px-4 py-2 space-x-2 rounded-md hover:bg-gray-700 hover:animate-fadeIn">
+        <a href="/Servers" className="flex items-center px-4 py-2 space-x-2 rounded-md hover:bg-gray-700 hover:animate-fadeIn">
           <ServerIcon className="w-5 h-5" />
           <span>Servers</span>
         </a>
-        <a href="#" className="flex items-center px-4 py-2 space-x-2 rounded-md hover:bg-gray-700 hover:animate-fadeIn">
+        <a href="/Activity" className="flex items-center px-4 py-2 space-x-2 rounded-md hover:bg-gray-700 hover:animate-fadeIn">
           <ActivityIcon className="w-5 h-5" />
           <span>Activity</span>
         </a>
-        <a href="#" className="flex items-center px-4 py-2 space-x-2 rounded-md hover:bg-gray-700 hover:animate-fadeIn">
+        <a href="/Payment" className="flex items-center px-4 py-2 space-x-2 rounded-md hover:bg-gray-700 hover:animate-fadeIn">
           <ReceiptIcon className="w-5 h-5" />
           <span>Payment</span>
         </a>
-        <a href="#" className="flex items-center px-4 py-2 space-x-2 rounded-md hover:bg-gray-700 hover:animate-fadeIn">
+        <a href="/Shop" className="flex items-center px-4 py-2 space-x-2 rounded-md hover:bg-gray-700 hover:animate-fadeIn">
           <StoreIcon className="w-5 h-5" />
           <span>Shop</span>
         </a>
-        <a href="#" className="flex items-center px-4 py-2 space-x-2 rounded-md hover:bg-gray-700 hover:animate-fadeIn">
+        <a href="/Settings" className="flex items-center px-4 py-2 space-x-2 rounded-md hover:bg-gray-700 hover:animate-fadeIn">
           <SettingsIcon className="w-5 h-5" />
           <span>Settings</span>
         </a>
