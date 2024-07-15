@@ -2,7 +2,7 @@ import React from 'react';
 import Header from './Header';
 import SideBar from './SideBar';
 
-const Servers = () => {
+const Settings = () => {
   return (
     <div className="flex h-screen bg-gray-800 text-white">
       <SideBar />
@@ -10,8 +10,8 @@ const Servers = () => {
         <div className="container mx-auto p-4">
           <Header />
           <div className="bg-gray-900 shadow-md rounded-md p-4">
-            <h2 className="text-lg font-semibold mb-2">Servers</h2>
-            <p>This is the Servers page.</p>
+            <h2 className="text-lg font-semibold mb-2">Settings</h2>
+            <p>This is the Settings page.</p>
           </div>
         </div>
       </main>
@@ -19,4 +19,4 @@ const Servers = () => {
   );
 };
 
-export default Servers;
+export default Settings;
