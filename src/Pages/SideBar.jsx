@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import anime from 'animejs/lib/anime.es.js'; // Import anime.js
 import { Resizable } from 're-resizable';
 import {
@@ -14,10 +14,25 @@ import {
   StoreIcon,
   SettingsIcon
 } from '../Comps/ui/Icons'; // Assuming Icons are exported from Icons.jsx
-import { PiUserCircleMinusDuotone } from 'react-icons/pi';
 import { SiIcon } from 'react-icons/si';
+import axiosInstance from '../axiosConfig'; // Ensure axiosConfig is correctly imported
 
 const SideBar = () => {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await axiosInstance.get('/api/user');
+        setUser(response.data);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
   useEffect(() => {
     // Animation configuration
     anime({
@@ -29,6 +44,11 @@ const SideBar = () => {
       delay: 500,
     });
   }, []);
+
+  const handleLogout = async () => {
+    await axiosInstance.get('/api/logout');
+    window.location.href = '/login';
+  };
 
   return (
     <aside className="flex flex-col w-34 p-4 bg-gray-900">
@@ -60,28 +80,34 @@ const SideBar = () => {
           <SettingsIcon className="w-5 h-5" />
           <span>Settings</span>
         </a>
-
-        <a href="/Settings" className="flex items-center px-4 py-2 space-x-2 rounded-md hover:bg-gray-700 hover:animate-fadeIn">
-          <SiIcon className="w-5 h-5" />
-          <span>Admin</span>
-        </a>
-        
-        
+        {user && user.isAdmin && (
+          <a href="/Admin" className="flex items-center px-4 py-2 space-x-2 rounded-md hover:bg-gray-700 hover:animate-fadeIn">
+            <SiIcon className="w-5 h-5" />
+            <span>Admin</span>
+          </a>
+        )}
       </nav>
-      <div className="flex items-center justify-center h-16 mt-8">
-        <Resizable
-          defaultSize={{
-            width: 26,
-            height: 26,
-          }}
-        >
-          <Avatar>
-            <AvatarImage src="/user.svg" className="avatar" />
-            <AvatarFallback>U</AvatarFallback>
-          </Avatar>
-        </Resizable>
-        <span className="ml-2">Username</span>
-      </div>
+      {user && (
+        <div className="flex items-center justify-center h-16 mt-8">
+          <Resizable
+            defaultSize={{
+              width: 26,
+              height: 26,
+            }}
+          >
+            <Avatar>
+              <AvatarImage src="/user.svg" className="avatar" />
+              <AvatarFallback>U</AvatarFallback>
+            </Avatar>
+          </Resizable>
+          <span className="ml-2">{user.email}</span>
+        </div>
+      )}
+      {user && (
+        <button onClick={handleLogout} className="mt-4 px-4 py-2 text-white bg-red-500 rounded-md">
+          Logout
+        </button>
+      )}
     </aside>
   );
 };

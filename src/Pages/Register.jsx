@@ -4,18 +4,18 @@ import axiosInstance from '../axiosConfig';
 import SideBar from './SideBar';
 import Header from './Header';
 
-const Login = () => {
+const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axiosInstance.post('/api/login', { email, password });
-      localStorage.setItem('token', response.data.token);
-      window.location.href = '/';
+      const response = await axiosInstance.post('/api/register', { email, password });
+      // Redirect to the login page or home page
+      window.location.href = '/Login';
     } catch (error) {
-      console.error('Login error', error);
+      console.error('Registration error', error);
     }
   };
 
@@ -26,7 +26,7 @@ const Login = () => {
         <div className="container mx-auto p-4">
           <Header />
           <div className="bg-gray-900 shadow-md rounded-md p-4">
-            <h2 className="text-lg font-semibold mb-2">Login</h2>
+            <h2 className="text-lg font-semibold mb-2">Register</h2>
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label className="form-label" htmlFor="email">Email:</label>
@@ -50,7 +50,7 @@ const Login = () => {
                   required
                 />
               </div>
-              <button type="submit" className="btn btn-primary">Login</button>
+              <button type="submit" className="btn btn-primary">Register</button>
             </form>
           </div>
         </div>
@@ -59,4 +59,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
