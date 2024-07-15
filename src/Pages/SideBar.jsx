@@ -29,7 +29,7 @@ const SideBar = () => {
   }, []);
 
   return (
-    <aside className="flex flex-col w-64 p-4 bg-gray-900">
+    <aside className="flex flex-col w-34 p-4 bg-gray-900">
       <div className="flex items-center justify-center h-16 mb-8">
         <img src="/logo.svg" alt="Neko-Astral Logo" className="w-12 h-12" />
       </div>

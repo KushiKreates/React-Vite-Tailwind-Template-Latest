@@ -89,7 +89,7 @@ const Admin = () => {
                       <p className="text-lg font-semibold">{container.name || 'No Name'}</p>
                       <p className="text-gray-400">{container.status}</p>
                     </div>
-                    <div className="mb-2">
+                    <div className="mb-1">
                       <p><span className="font-semibold">CPU:</span> {container.cpu}</p>
                       <p><span className="font-semibold">Memory:</span> {bytesToGB(container.mem)}</p>
                       <p><span className="font-semibold">Disk:</span> {bytesToGB(container.disk)}</p>
@@ -100,18 +100,19 @@ const Admin = () => {
                     <div className="absolute bottom-4 right-4 flex flex-col gap-2">
                       <button
                         onClick={() => handlePowerOn(container.vmid)}
-                        className="bg-green-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 flex items-center"
+                        className="bg-green-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
                       >
-                        <FaPlay className="mr-2" /> Power On
+                        Power On
                       </button>
                       <button
                         onClick={() => handlePowerOff(container.vmid)}
-                        className="bg-red-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 flex items-center"
+                        className="bg-red-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500"
                       >
-                        <FaPowerOff className="mr-2" /> Power Off
+                        Power Off
                       </button>
                     </div>
                   </div>
+                
                 ))}
               </div>
             )}
