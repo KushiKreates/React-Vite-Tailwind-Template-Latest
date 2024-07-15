@@ -3,6 +3,7 @@ import Header from './Header';
 import anime from 'animejs/lib/anime.es.js'; // Import anime.js
 import axios from 'axios';
 import SideBar from './SideBar';
+import { FaPowerOff, FaPlay } from 'react-icons/fa'; // Importing icons from react-icons
 
 const bytesToGB = (bytes) => {
   if (bytes === 0) return '0 GB';
@@ -99,15 +100,15 @@ const Admin = () => {
                     <div className="absolute bottom-4 right-4 flex flex-col gap-2">
                       <button
                         onClick={() => handlePowerOn(container.vmid)}
-                        className="bg-green-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="bg-green-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 flex items-center"
                       >
-                        Power On
+                        <FaPlay className="mr-2" /> Power On
                       </button>
                       <button
                         onClick={() => handlePowerOff(container.vmid)}
-                        className="bg-red-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500"
+                        className="bg-red-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 flex items-center"
                       >
-                        Power Off
+                        <FaPowerOff className="mr-2" /> Power Off
                       </button>
                     </div>
                   </div>
