@@ -18,15 +18,10 @@ model User {
   banInfo         BanInfo[]
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
-  admin           Admin?
+  admin           Boolean   @default(false)
   containers      Container[]
 }
 
-model Admin {
-  id        Int      @id @default(autoincrement())
-  userId    Int      @unique
-  user      User     @relation(fields: [userId], references: [id])
-}
 
 model BanInfo {
   id          Int      @id @default(autoincrement())
