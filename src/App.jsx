@@ -1,34 +1,89 @@
+
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Admin from './Pages/Admin';
-import Home from './Pages/Home';
 import Login from './Pages/Login';
+import Register from './Pages/Register';
+import Dashboard from './Pages/Dashboard';
+import ProtectedRoute from './ProtectedRoute';
 import Shop from './Pages/Shop';
 import Settings from './Pages/Settings';
 import Activity from './Pages/Activity';
 import Servers from './Pages/Servers';
 import User from './Pages/User';
 import Payment from './Pages/Payment';
-import Header from './Pages/Header';
-import SideBar from './Pages/SideBar';
+import Admin from './Pages/Admin'; // Assuming you have an Admin component
 
-const App = () => {
-  return (
-    <Router>
-     
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/admin" element={<Admin />} />
-              <Route path="/shop" element={<Shop />} />
-              <Route path="/settings" element={<Settings />} />
-              <Route path="/activity" element={<Activity />} />
-              <Route path="/servers" element={<Servers />} />
-              <Route path="/user" element={<User />} />
-              <Route path="/payment" element={<Payment />} />
-            </Routes>
-    </Router>
-  );
-}
+const App = () => (
+  <Router>
+    <Routes>
+      <Route path="/Login" element={<Login />} />
+      <Route path="/Register" element={<Register />} />
+      <Route 
+        path="/admin" 
+        element={
+          <ProtectedRoute requireAdmin>
+            <Admin />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/shop" 
+        element={
+          <ProtectedRoute>
+            <Shop />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/settings" 
+        element={
+          <ProtectedRoute>
+            <Settings />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/activity" 
+        element={
+          <ProtectedRoute>
+            <Activity />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/servers" 
+        element={
+          <ProtectedRoute>
+            <Servers />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/user" 
+        element={
+          <ProtectedRoute>
+            <User />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/payment" 
+        element={
+          <ProtectedRoute>
+            <Payment />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/" 
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        } 
+      />
+    </Routes>
+  </Router>
+);
 
 export default App;
