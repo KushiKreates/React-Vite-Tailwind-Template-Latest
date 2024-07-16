@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import axiosInstance from './axiosConfig';
+import anime from 'animejs';
 
 const ProtectedRoute = ({ children, requireAdmin }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -21,8 +22,19 @@ const ProtectedRoute = ({ children, requireAdmin }) => {
     checkAuth();
   }, []);
 
+  useEffect(() => {
+    anime({
+      targets: '.loading',
+      opacity: [0, 1],
+      duration: 1000,
+      easing: 'easeInOutQuad',
+      loop: true,
+      direction: 'alternate'
+    });
+  }, []);
+
   if (isAuthenticated === null || isAdmin === null) {
-    return <div>Loading...</div>;
+    return <div className="loading text-center text-white">Loading...</div>;
   }
 
   if (!isAuthenticated) {

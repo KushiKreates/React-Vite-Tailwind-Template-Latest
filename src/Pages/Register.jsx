@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import axiosInstance from '../axiosConfig';
+import { auth } from '../firebase'; // Ensure this path is correct
 import SideBar from './SideBar';
 import Header from './Header';
 
@@ -11,9 +10,9 @@ const Register = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axiosInstance.post('/api/register', { email, password });
-      // Redirect to the login page or home page
-      window.location.href = '/Login';
+      const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+      // Optionally, you can handle additional user data storage here
+      window.location.href = '/login'; // Redirect to login page after successful registration
     } catch (error) {
       console.error('Registration error', error);
     }
